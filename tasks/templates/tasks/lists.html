@@ -1,0 +1,32 @@
+{% extends "tasks/base.html" %}
+
+{% block content %}
+
+<div class="center">  
+    <h3>To Do</h3>
+    <form action="/" method="POST">
+        {% csrf_token %}
+        {{ form.title}}
+        <input type="submit" class= "btn btn-success" name="Create task">
+
+    </form>
+    
+        {% for task in tasks%}
+         <div class="item-row">
+
+                    <div>
+                        {% if task.complete == True %}
+                            <strike> <i>{{ task }}</i></strike>
+                        {% else %}
+                            <i>{{ task}} <i>
+
+                        {% endif %}
+                    </div>
+            <a href=" {% url 'update_task' task.id %}" class= "btn btn-danger btn-sm">Edit<a>
+            <a href=" {% url 'delete_task' task.id %}" class= "btn btn-info btn-sm">Delete</a>
+         </div>
+        {% endfor %}
+</div>
+
+
+{% endblock %}
